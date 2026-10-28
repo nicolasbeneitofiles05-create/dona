@@ -5,11 +5,13 @@ const {createHash}=require('node:crypto');
 const assert=require('node:assert/strict');
 (async()=>{
  const url=process.env.DONA_URL||'https://dona-2fp.pages.dev';
+ const sha=process.argv[3];
+ assert(/^[a-f0-9]{40}$/.test(sha||''),'Indicar SHA exacto como tercer argumento: node scripts/production-smoke.cjs <HTML del artefacto> <SHA>');
  const expected=readFileSync(process.argv[2]||'index.html');
  const browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_PATH||'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});
  try{
   const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  const response=await page.goto(url+'/?release-check=75fc9e2',{waitUntil:'networkidle'});
+  const response=await page.goto(url+'/?release-check='+sha.slice(0,8),{waitUntil:'networkidle'});
   assert.equal(response.status(),200);
   const body=await response.body();assert(body.equals(expected),'HTML público coincide byte a byte con artefacto del SHA');
   await page.locator('#postal').fill('28007');await page.locator('#postal').press('Enter');
@@ -29,7 +31,7 @@ const assert=require('node:assert/strict');
    await page.screenshot({path:`dist/production-${width}.png`,fullPage:true});
   }
   assert.deepEqual(errors,[]);
-  const report={url,status:response.status(),checked_at:new Date().toISOString(),sha:'75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6',html_sha256:createHash('sha256').update(body).digest('hex'),byte_match:true,postal_28007:true,expired_after_reload:true,withdrawn_notices_absent:true,mobile_widths:widths,js_errors:errors,browser:await browser.version()};
+  const report={url,status:response.status(),checked_at:new Date().toISOString(),sha,html_sha256:createHash('sha256').update(body).digest('hex'),byte_match:true,postal_28007:true,expired_after_reload:true,withdrawn_notices_absent:true,mobile_widths:widths,js_errors:errors,browser:await browser.version()};
   writeFileSync('dist/production-results.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});

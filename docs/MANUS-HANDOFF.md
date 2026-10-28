@@ -1,17 +1,17 @@
 # Encargo manual para Manus
 
-Este documento no conecta Manus ni Venice. No hay evidencia de que estén trabajando. No se ha enviado el encargo a ningún servicio externo.
+Este documento registra el encargo manual inicial. Manus ha entregado el PR #5 y sus cambios técnicos de móvil/accesibilidad se han revisado y publicado. No existe integración automática ni evidencia de otro encargo en ejecución. La siguiente iteración se preparará por separado, sobre el SHA vigente.
 
 ## Punto de partida exacto
 
 - Repositorio: https://github.com/nicolasbeneitofiles05-create/dona
 - Rama de origen: `main`.
-- SHA exacto publicado y comprobado: **`75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6`**. Usar este punto de partida, sin recrear el proyecto a partir de una captura o copia de la web.
-- PR #1, #2 y #3 fusionados en orden, sin conflictos. Cloudflare publica ese SHA; evidencia y recuperación en `docs/PRODUCTION.md`.
+- SHA exacto publicado y comprobado vigente: **`aba4b83f254d001e890b2c3b6bad175a2cf32c90`**. Base inicial del encargo ya entregado: `75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6`. No recrear el proyecto desde una captura o copia web.
+- PR #1, #2, #3 y #5 fusionados. Cloudflare publica el SHA vigente; evidencia y recuperación en `docs/PRODUCTION.md`.
 
 ```sh
 git fetch origin
-git switch -c manus/mobile-accessibility 75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6
+git switch -c manus/mobile-next aba4b83f254d001e890b2c3b6bad175a2cf32c90
 python scripts/build.py
 node scripts/test-notices.cjs
 ```
