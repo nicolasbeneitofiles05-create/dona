@@ -30,7 +30,9 @@ const assert=require('node:assert/strict');
    assert.equal(await page.locator('#searchResult .result-main').count(),1,'una única acción principal '+cp);
    if(cp==='03801')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://centro-transfusion.san.gva.es/es/puntos-de-donacion');
    if(cp==='28007')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://www.comunidad.madrid/salud/donacion-sangre');
+   if(cp==='13001'||cp==='45001')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://sanidad.castillalamancha.es/ciudadanos/hazte-donante-sangre/colectas-donantes-de-sangre');
    if(cp==='51001'||cp==='52001')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://www.sanidad.gob.es/profesionales/saludPublica/medicinaTransfusional/dondedonar.htm',cp+' usa el directorio estatal exacto');
+   assert.equal(new URL(await page.locator('#searchResult .result-main').getAttribute('href')).protocol,'https:',cp+' destino HTTPS');
    if(cp==='13001')assert(!(text.includes('Colectas Toledo')));
    if(cp==='45001')assert(!(text.includes('Colectas Ciudad Real')));
   }
