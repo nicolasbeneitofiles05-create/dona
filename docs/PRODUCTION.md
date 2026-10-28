@@ -1,6 +1,26 @@
 # Publicación comprobada · 29/10/2026
 
-## Versión vigente tras PR #5
+## Versión vigente tras PR #7
+
+- SHA publicado: `c861d70593f23a0d092bfcf051013c6db81327d9`, merge de #7.
+- URL: https://dona-2fp.pages.dev; despliegue `83096e66-c7b0-484e-b6a4-c26dd5e7d6af`, `production`, `deploy/success`, sin cambios sin guardar en el artefacto.
+- HTML: 34.866 bytes; SHA-256 `2bbf529e19994773f664acd6030282b445f8c4fa6b669577aa7586ea5d9422f1`.
+- Worker: SHA-256 `05d354464e0317bb28b97ef8a97ead9b09e921e6552cb42547b4e9a1a88812e2`.
+- Rollback anterior conservado: `0d423adf-7e19-4506-aaf7-2c2d48c63d58`, SHA `aba4b83f254d001e890b2c3b6bad175a2cf32c90`, etiqueta `recovery/compact-before-pr7`.
+
+Se revisó el SHA solicitado `24b261f3c239431da79e459b87b549f498e3ee64`: Ceuta/Melilla corregidos con URL estatal exacta; hilo de revisión anterior resuelto. Antes de integrar se reparó además el enlace genérico 404 de Castilla-La Mancha con su calendario institucional recuperado HTTP 200, sin trasladar horarios ni necesidades al producto. Head final validado `2eeda0de50fd0b0b054d4c0d44624eeef53dec90`; árbol del merge idéntico. Detalle en `PR7-VALIDATION.md`.
+
+Ejecutados build, avisos y navegador: seis CP con destino exacto HTTPS, inválidos, directorio plegable, alturas, caducidad en pestaña/recarga, aviso falso y cinco anchuras. Red inicial: 20 de 23 URL 2xx; el 404 de CLM se corrigió y su nueva ruta responde 200. La Rioja (conexión) y Castilla y León (403) quedan pendientes con alternativa estatal, sin atribuir a esos resultados una verificación sanitaria.
+
+Prueba pública en Edge 149.0.7827.85: HTTP 200, bytes exactos del artefacto, seis destinos oficiales, clic real de 51001 y 52001 al Ministerio y respuesta 200 de su directorio. Campaña caducada tras recargar y avisos retirados ausentes; 320, 390 y 1440 px sin desbordamiento ni errores JS. Captura 390 inspeccionada. Informe `dist/production-results.json`; artefacto generado directamente desde Git en `dist/releases/<SHA>/`.
+
+### Incidencia de coordinación observada
+
+La API registró publicaciones ad hoc ajenas a esta ejecución del SHA antiguo `01ec033...`: `4f9160dc-92df-4565-8795-fbb8fd746a98` y `d6dcca2b-7337-4113-9341-25a336713643`, esta última posterior al despliegue de #7. No se atribuyen a Manus ni a una integración automática sin evidencia. Se volvió a seleccionar el despliegue validado mediante el endpoint de rollback, que confirmó éxito. Comprobación pública posterior: 29/10/2026 00:41:17 Madrid (28/10 23:41:17 UTC), HTML idéntico al SHA de #7. Nueva lectura de API a las 00:42 Madrid mantenía el SHA correcto.
+
+Antes de una nueva publicación, coordinar un único publicador y comparar el despliegue canónico: otra ejecución puede sobrescribir una versión ya validada. No se han eliminado despliegues, revocado permisos ni modificado integraciones. El rollback sanitario anterior permanece disponible. Coste adicional contratado: 0 €; sin plan de pago ni tareas recurrentes.
+
+## Registro histórico tras PR #5
 
 - SHA publicado: `aba4b83f254d001e890b2c3b6bad175a2cf32c90`, rama `main` al fusionar #5.
 - URL pública: https://dona-2fp.pages.dev
