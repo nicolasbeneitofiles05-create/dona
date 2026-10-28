@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "partial_not_for_distance_search",
+  "checked_at": "2026-10-28T22:53:00Z",
+  "locations": [{
+    "id": "es-md-ctcm",
+    "name": "Centro de Transfusión de la Comunidad de Madrid",
+    "kind": "transfusion_centre",
+    "jurisdiction": {"country": "ES", "region": "Comunidad de Madrid", "province_prefix": "28", "municipality": "Madrid"},
+    "address": "Av. de la Democracia, s/n, Vicálvaro, 28032 Madrid, España",
+    "coordinates": {"latitude": null, "longitude": null, "crs": "EPSG:4326", "precision": "unverified", "accuracy_metres": null, "evidence_url": null},
+    "opening_hours": null,
+    "opening_hours_status": "conflicting_official_sources",
+    "published_at": null,
+    "published_at_status": "not_stated_on_source",
+    "checked_at": "2026-10-28T22:53:00Z",
+    "review_due_at": "2026-11-04T22:53:00Z",
+    "source_url": "https://www.comunidad.madrid/hospital/centrodetransfusion/",
+    "evidence": [
+      {"url": "https://www.comunidad.madrid/hospital/centrodetransfusion/", "supports": ["identity", "address", "jurisdiction"], "hours_observed": "Lunes a sábado no festivos: 08:30–21:00; domingos y festivos: 08:30–14:00"},
+      {"url": "https://www.comunidad.madrid/salud/donacion-sangre", "supports": ["identity"], "hours_observed": "Lunes a sábado no festivos: 08:30–21:30; domingos y festivos: 08:30–14:00"}
+    ],
+    "distance_eligible": false,
+    "public_listing_eligible": false,
+    "pending": ["Corroborar coordenadas de acceso y precisión", "Resolver discrepancia de horario con el organismo", "Comprobar excepciones antes de listar"]
+  }]
+}

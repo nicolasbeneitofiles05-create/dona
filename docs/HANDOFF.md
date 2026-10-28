@@ -2,19 +2,19 @@
 
 ## Fuente de verdad
 
-`index.html` es el archivo original publicado, sin correcciones sanitarias implícitas. Este PR importa una base existente, no una versión nueva de Venice. El repositorio coordina versiones; no conecta por sí solo Venice, Manus y Cloudflare.
+`index.html` conserva la aplicación importada con las correcciones de esta rama. La producción no se ha actualizado. La importación original se conserva en el PR #1 y en Git. El repositorio coordina versiones; no conecta por sí solo Venice, Manus y Cloudflare. Consultar `SOURCE-AUDIT.md`, `VALIDATION.md`, `GEOGRAPHY.md` y el encargo `MANUS-HANDOFF.md`.
 
 ## Prioridades
 
 1. Verificar identidad, fuente y vigencia de cada aviso sanitario. No dar por cierto el contenido por tener URL.
 2. Comprobar móvil, accesibilidad y enlaces. No prometer distancia ni centro más cercano con el buscador actual.
 3. Geocodificación real de CP e inventario con id, coordenadas, precisión, jurisdicción, horarios, fechas y URL de evidencia. Si faltan coordenadas, no ordenar por distancia.
-4. Backend con allowlist, historial, revisión humana y estados pendiente/verificado/caducado. No renovar vigencia al recargar.
+4. Mantener revisión editorial y estados con caducidad fija. No añadir backend, autenticación ni base de datos sin petición expresa. No renovar vigencia al recargar.
 5. Solo integrar redes institucionales por medios autorizados. MFA, roles, auditoría, anti-spam y rollback antes de administración pública.
 
 ## Verificación
 
-Comprobado en producción: portada y 28007 devuelve Madrid. Pendiente: 03801, 13001, 45001, Ceuta, Melilla, inválidos, caducidad, falsa alerta, orden geográfico real, permisos, enlaces y auditoría móvil. No se han verificado todas las afirmaciones sanitarias ni una supuesta lista de 45 centros.
+La comprobación inicial de portada y 28007 en producción procede del PR #1. Esta fase ha ejecutado pruebas locales contra el worker compilado, detalladas en `VALIDATION.md`. La consulta directa de producción devolvió 403. Distancias y permisos siguen pendientes porque no están implementados. No hay una lista de 45 centros acreditada.
 
 ## Build y despliegue
 
