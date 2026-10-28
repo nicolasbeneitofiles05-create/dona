@@ -5,13 +5,13 @@ Este documento no conecta Manus ni Venice. No hay evidencia de que estén trabaj
 ## Punto de partida exacto
 
 - Repositorio: https://github.com/nicolasbeneitofiles05-create/dona
-- Rama de origen: `fix/province-accessibility`.
-- SHA de código probado: **`5b40a9e296efaa26edf0395ecc295371ae12d768`**. El commit posterior solo añade este encargo; usar el SHA fijado, no `main` ni una copia de la web publicada.
-- PR #1: importación abierta. PR #2: correcciones sanitarias sobre la rama de importación. Esta rama apila móvil, accesibilidad y documentación sobre #2. Ninguno de estos cambios se ha publicado.
+- Rama de origen: `main`.
+- SHA exacto publicado y comprobado: **`75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6`**. Usar este punto de partida, sin recrear el proyecto a partir de una captura o copia de la web.
+- PR #1, #2 y #3 fusionados en orden, sin conflictos. Cloudflare publica ese SHA; evidencia y recuperación en `docs/PRODUCTION.md`.
 
 ```sh
 git fetch origin
-git switch -c manus/mobile-accessibility 5b40a9e296efaa26edf0395ecc295371ae12d768
+git switch -c manus/mobile-accessibility 75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6
 python scripts/build.py
 node scripts/test-notices.cjs
 ```
@@ -22,13 +22,13 @@ Leer README.md, docs/HANDOFF.md, docs/SOURCE-AUDIT.md, docs/VALIDATION.md y docs
 
 Guía independiente de canales oficiales por provincia. El CP solo identifica un prefijo provincial: no valida existencia postal, no geocodifica, no calcula distancias ni encuentra el centro más cercano. No hay ingesta automática, cuentas sanitarias conectadas, backend, autenticación ni base de datos. No recoge datos médicos ni guarda el CP.
 
-Los llamamientos sin corroboración se han retirado en el código. La campaña conservada tiene fechas fijas y pasa a caducada automáticamente; su caducidad editorial no representa un horario del centro. La web pública conserva la importación original y puede contener los avisos retirados. La producción no debe usarse como copia base.
+Los llamamientos sin corroboración se han retirado también de producción. La campaña conservada figura caducada en la comprobación pública; su caducidad editorial no representa un horario del centro. El HTML público coincide byte a byte con el artefacto del SHA fijado. El repositorio es la base editable.
 
 Un único centro en el inventario documental: coordenadas pendientes y horarios oficiales discrepantes. No está habilitado para listarlo ni ordenar por distancia. Los textos legales no están validados jurídicamente. Las pruebas de navegador no certifican accesibilidad completa.
 
 ## Trabajo autorizado
 
-- **Estética:** conservar el tono sobrio, fondo cálido, rojo oscuro y jerarquía de DONA. Afinar espaciado y legibilidad; no recrear la aplicación ni introducir una nueva identidad.
+- **Estética:** preparar una mejora visual profesional conservando fondo cálido, rojo oscuro e identidad DONA. Resolver densidad de cabecera, jerarquía del buscador y peso de las notas editoriales. Aportar propuesta antes/después y comprobar contenido real con avisos caducados, no una demo independiente. Mantener presentes fechas y fuentes.
 - **Operativa:** mejorar el recorrido buscar provincia → abrir canal oficial → confirmar información, manteniendo visibles sus límites y la alternativa estatal. Diseñar estados vacío, inválido y resultado sin sugerir urgencia o proximidad.
 - **Técnica:** revisar 320, 375, 390, 768 y 1440 px, zoom 200 %, teclado, orden de foco, contraste, lector de pantalla y reducción de movimiento. Corregir problemas concretos con capturas antes/después y pruebas reproducibles.
 - **Riesgo:** no alterar afirmaciones sanitarias, necesidades, fechas, fuentes, horarios, centros, nombres de campañas o caducidad sin evidencia primaria y revisión separada. Un enlace o `verified:true` no acreditan una afirmación. No añadir «tiempo real», datos médicos, formularios de salud, secretos, analítica, permisos de ubicación ni servicios de pago.
@@ -40,10 +40,21 @@ Un único centro en el inventario documental: coordenadas pendientes y horarios 
 - Crear `docs/MANUS-REVIEW.md` con archivos tocados, hallazgos, capturas, pruebas ejecutadas y pendientes, navegador y anchuras.
 - No modificar inventario, auditoría sanitaria, build, infraestructura, dependencias de producción ni secretos. No añadir backend, auth, base de datos ni mover Cloudflare.
 
+## Segundo encargo: buscador geográfico real
+
+Entregar en otro PR desde `main`, rama `manus/geographic-search`, después de revisar `docs/GEOGRAPHY.md`. No mezclar una mejora visual con cambios sanitarios o de geolocalización.
+
+1. Preparar un inventario mayor en `data/geographic-inventory.json` con identidad, jurisdicción, coordenadas WGS84, precisión, horarios y excepciones, publicación conocida o desconocida, comprobación, próxima revisión y URL de evidencia por campo. No inventar datos faltantes ni resolver por intuición el horario discrepante.
+2. Seleccionar una fuente postal descargable con licencia, fecha de versión y evidencia de cobertura de España, Ceuta y Melilla. Priorizar datos locales, gratuitos y sin claves. Documentar procedencia y límites; no elegir proveedor de pago ni añadir consultas recurrentes. Un centroide de CP no representa la ubicación exacta de la persona.
+3. Solo habilitar CP real y orden por distancia cuando haya datos postales y coordenadas suficientes y corroborados. Mostrar distancia en línea recta y precisión. Excluir del orden los centros sin coordenadas; conservar alternativa oficial y explicar cobertura parcial. No afirmar «más cercano» si no se puede respaldar.
+4. Archivos adicionales permitidos para este segundo PR: inventario, `docs/GEOGRAPHY.md`, datos postales con licencia y atribución, lógica geográfica local y pruebas de distancias. Si requiere separar JS del HTML, adaptar el build en el mismo PR y demostrar que Cloudflare sirve todos los recursos; mantener la arquitectura sin backend ni secretos.
+5. Probar los seis CP del encargo, CP inexistente, ceros iniciales, límites provinciales, datos ausentes/caducados y distancias conocidas con tolerancia declarada. Ubicación por permisos no es necesaria para CP; si se propone, tratarla como cambio separado, voluntario, sin almacenar posición y probar denegación/error.
+6. Las fuentes, fechas, `noticeState` y pruebas de avisos sanitarios quedan protegidas también en este PR. No publicar ni fusionar. Si falta evidencia suficiente para activar distancias, entregar el inventario y dejar la función desactivada con explicación.
+
 ## Criterios de aceptación y devolución
 
 1. Build correcto y HTML completo servido; pasar `node scripts/test-notices.cjs` y `node scripts/test-browser.cjs`. Para este último instalar Playwright local según README y definir `BROWSER_PATH` si no se usa Edge de Windows.
 2. Mantener 03801, 28007, 13001, 45001, 51001 y 52001, inválidos, caducidad y recarga, rechazo de aviso falso, enlaces y móvil. Sin errores JS ni desbordamiento horizontal, también con resultado abierto. Informar si una prueba no se puede ejecutar.
 3. Menú accesible en móvil, foco visible y lógico, etiquetas y errores comprensibles, objetivos táctiles suficientes. Aportar evidencia de contraste y lector de pantalla si se prueban; no atribuir una certificación WCAG sin auditoría completa.
-4. Guardar en `manus/mobile-accessibility`, subir esa rama y abrir PR contra `fix/province-accessibility`. Indicar el SHA base fijado y el SHA final, resumen del diff, pruebas y limitaciones.
+4. Guardar en la rama correspondiente y abrir PR contra `main`. Indicar SHA base fijado y SHA final, resumen del diff, pruebas y limitaciones. No afirmar que el encargo está en ejecución hasta que exista evidencia de recepción y trabajo.
 5. **No publicar, no fusionar y no habilitar automatismos.** Si la rama base ha cambiado, revisar diferencias y explicarlo; no rebasar a ciegas sobre `main`. La aprobación de diseño no valida contenido sanitario.

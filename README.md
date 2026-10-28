@@ -4,9 +4,9 @@ Guía independiente de canales oficiales de donación de sangre en España.
 
 Web: https://dona-2fp.pages.dev
 
-## Estado del trabajo — 28/10/2026
+## Estado del trabajo — 29/10/2026
 
-Esta rama contiene correcciones pendientes de revisión; **no se han publicado**. PR #1 sigue abierto (importación); PR #2 contiene fiabilidad sanitaria; la siguiente rama apila móvil, accesibilidad e inventario. La producción conserva su versión inicial y puede mostrar los avisos retirados aquí.
+PR #1, #2 y #3 fusionados en orden. **Producción comprobada**: SHA `75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6`, despliegue `4f09e706-800c-4434-96ea-c6fe3ab2d1f6`. El HTML público coincide byte a byte con el artefacto validado. Avisos retirados ausentes y campaña conservada caducada. Evidencia y recuperación en [PRODUCTION.md](docs/PRODUCTION.md).
 
 - Se retiran llamamientos no corroborados; la única campaña contrastada caduca con fecha fija. Ver [auditoría](docs/SOURCE-AUDIT.md).
 - Pruebas ejecutadas en Edge: seis CP, inválidos, aviso falso, caducidad y recarga, teclado, enlaces internos y cinco anchuras. Ver [validación](docs/VALIDATION.md).

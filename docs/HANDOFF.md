@@ -2,7 +2,7 @@
 
 ## Fuente de verdad
 
-`index.html` conserva la aplicación importada con las correcciones de esta rama. La producción no se ha actualizado. La importación original se conserva en el PR #1 y en Git. El repositorio coordina versiones; no conecta por sí solo Venice, Manus y Cloudflare. Consultar `SOURCE-AUDIT.md`, `VALIDATION.md`, `GEOGRAPHY.md` y el encargo `MANUS-HANDOFF.md`.
+`index.html` conserva la aplicación importada con las correcciones. PR #1, #2 y #3 fusionados; SHA `75fc9e25907b0eb3da89c8dd57c76cc4d2c15da6` publicado y comprobado. Ver `PRODUCTION.md`. La importación original se conserva en Git y en el despliegue previo. El repositorio coordina versiones; no conecta por sí solo Venice, Manus y Cloudflare. Consultar `SOURCE-AUDIT.md`, `VALIDATION.md`, `GEOGRAPHY.md` y el encargo `MANUS-HANDOFF.md`.
 
 ## Prioridades
 
@@ -14,7 +14,7 @@
 
 ## Verificación
 
-La comprobación inicial de portada y 28007 en producción procede del PR #1. Esta fase ha ejecutado pruebas locales contra el worker compilado, detalladas en `VALIDATION.md`. La consulta directa de producción devolvió 403. Distancias y permisos siguen pendientes porque no están implementados. No hay una lista de 45 centros acreditada.
+Las pruebas locales iniciales están en `VALIDATION.md`. Tras la publicación se ha comprobado la URL pública en Edge: HTML idéntico al artefacto, 28007, móvil, retirada de avisos y caducidad tras recargar. El 403 de la fase anterior ya no impidió esta comprobación. Distancias y permisos siguen pendientes porque no están implementados. No hay una lista de 45 centros acreditada.
 
 ## Build y despliegue
 
