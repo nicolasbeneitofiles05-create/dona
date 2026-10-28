@@ -2,7 +2,7 @@
 
 ## Fuente de verdad
 
-`index.html` conserva la aplicación importada con las correcciones y la mejora técnica de Manus #5, revisada independientemente. PR #1, #2, #3 y #5 fusionados; SHA `aba4b83f254d001e890b2c3b6bad175a2cf32c90` publicado y comprobado. Ver `PRODUCTION.md`. La versión sanitaria anterior y la importación original se conservan en Git y Cloudflare. El repositorio no conecta por sí solo Venice, Manus y Cloudflare. Consultar `SOURCE-AUDIT.md`, `VALIDATION.md`, `GEOGRAPHY.md` y el encargo `MANUS-HANDOFF.md`.
+`index.html` incorpora el móvil compacto de #7 y las correcciones sanitarias previas. SHA `c861d70593f23a0d092bfcf051013c6db81327d9` publicado y comprobado. Ver `PRODUCTION.md` y `PR7-VALIDATION.md`. La versión sanitaria anterior se conserva en Git y Cloudflare. Siguiente fase: `GEOGRAPHIC-INVENTORY-HANDOFF.md`, sin activar distancias. No hay integración automática con Manus/Venice.
 
 ## Prioridades
 

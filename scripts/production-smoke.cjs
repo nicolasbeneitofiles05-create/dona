@@ -22,7 +22,7 @@ const assert=require('node:assert/strict');
   assert(!(await page.locator('body').innerText()).includes('Hospital General de Valdepeñas'));
   assert(!(await page.locator('body').innerText()).includes('Llamamiento Urda'));
   await page.reload();assert((await page.locator('#eventCards .label').innerText()).includes('Caducado'));
-  const widths=[320,390];
+  const widths=[320,390,1440];
   for(const width of widths){
    await page.setViewportSize({width,height:844});
    await page.locator('#postal').fill('28007');await page.locator('#postal').press('Enter');
@@ -30,8 +30,19 @@ const assert=require('node:assert/strict');
    assert(await page.getByRole('link',{name:'Avisos',exact:true}).isVisible());
    await page.screenshot({path:`dist/production-${width}.png`,fullPage:true});
   }
+  const national='https://www.sanidad.gob.es/profesionales/saludPublica/medicinaTransfusional/dondedonar.htm';
+  const destinations={};
+  for(const [cp,expectedUrl] of [['03801','https://centro-transfusion.san.gva.es/es/puntos-de-donacion'],['28007','https://www.comunidad.madrid/salud/donacion-sangre'],['13001','https://sanidad.castillalamancha.es/ciudadanos/hazte-donante-sangre/colectas-donantes-de-sangre'],['45001','https://sanidad.castillalamancha.es/ciudadanos/hazte-donante-sangre/colectas-donantes-de-sangre'],['51001',national],['52001',national]]){
+   await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');
+   const href=await page.locator('#searchResult .result-main').getAttribute('href');assert.equal(href,expectedUrl);assert.equal(new URL(href).protocol,'https:');destinations[cp]=href;
+   if(cp==='51001'||cp==='52001'){
+    const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('#searchResult .result-main').click()]);
+    await popup.waitForLoadState('domcontentloaded');assert.equal(new URL(popup.url()).hostname,'www.sanidad.gob.es');assert(popup.url().includes('dondedonar.htm'));await popup.close();
+   }
+  }
+  assert.equal((await page.request.get(national)).status(),200);
   assert.deepEqual(errors,[]);
-  const report={url,status:response.status(),checked_at:new Date().toISOString(),sha,html_sha256:createHash('sha256').update(body).digest('hex'),byte_match:true,postal_28007:true,expired_after_reload:true,withdrawn_notices_absent:true,mobile_widths:widths,js_errors:errors,browser:await browser.version()};
+  const report={url,status:response.status(),checked_at:new Date().toISOString(),sha,html_sha256:createHash('sha256').update(body).digest('hex'),byte_match:true,official_destinations:destinations,ceuta_melilla_click:true,postal_28007:true,expired_after_reload:true,withdrawn_notices_absent:true,viewport_widths:widths,js_errors:errors,browser:await browser.version()};
   writeFileSync('dist/production-results.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});
