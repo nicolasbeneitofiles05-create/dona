@@ -4,14 +4,14 @@ Guía independiente de canales oficiales de donación de sangre en España.
 
 Web: https://dona-2fp.pages.dev
 
-## Estado del trabajo — 28/10/2026
+## Estado del trabajo — 29/10/2026
 
-Esta rama contiene correcciones pendientes de revisión; **no se han publicado**. PR #1 sigue abierto (importación); PR #2 contiene fiabilidad sanitaria; la siguiente rama apila móvil, accesibilidad e inventario. La producción conserva su versión inicial y puede mostrar los avisos retirados aquí.
+PR #1, #2, #3 y #5 fusionados. **Producción comprobada**: SHA `aba4b83f254d001e890b2c3b6bad175a2cf32c90`, despliegue `0d423adf-7e19-4506-aaf7-2c2d48c63d58`. El HTML público coincide byte a byte con el artefacto validado. Avisos retirados ausentes y campaña conservada caducada. #5 aporta mejoras técnicas de móvil/accesibilidad; la portada aún requiere una reducción importante. Evidencia y recuperación en [PRODUCTION.md](docs/PRODUCTION.md).
 
 - Se retiran llamamientos no corroborados; la única campaña contrastada caduca con fecha fija. Ver [auditoría](docs/SOURCE-AUDIT.md).
 - Pruebas ejecutadas en Edge: seis CP, inválidos, aviso falso, caducidad y recarga, teclado, enlaces internos y cinco anchuras. Ver [validación](docs/VALIDATION.md).
 - Inventario documental parcial, sin coordenadas inventadas, geocodificación ni distancias. Ver [geografía](docs/GEOGRAPHY.md).
-- Manus y Venice no están integrados ni hay evidencia de trabajo en curso. El [encargo para Manus](docs/MANUS-HANDOFF.md) es un documento para entrega manual.
+- Manus entregó el PR #5, ya revisado y publicado. No hay integración automática ni evidencia de trabajo adicional en curso. El [encargo para Manus](docs/MANUS-HANDOFF.md) es un documento para entrega manual.
 
 ## Despliegue inicial documentado
 
