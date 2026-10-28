@@ -12,6 +12,7 @@ PR #1, #2, #3 y #5 fusionados. **Producción comprobada**: SHA `aba4b83f254d001e
 - Pruebas ejecutadas en Edge: seis CP, inválidos, aviso falso, caducidad y recarga, teclado, enlaces internos y cinco anchuras. Ver [validación](docs/VALIDATION.md).
 - Inventario documental parcial, sin coordenadas inventadas, geocodificación ni distancias. Ver [geografía](docs/GEOGRAPHY.md).
 - Manus entregó el PR #5, ya revisado y publicado. No hay integración automática ni evidencia de trabajo adicional en curso. El [encargo para Manus](docs/MANUS-HANDOFF.md) es un documento para entrega manual.
+- Siguiente encargo independiente: [reducir la portada móvil](docs/MANUS-NEXT-MOBILE.md), con medidas de referencia y criterios de aceptación. [Preparación geográfica](docs/GEOGRAPHY-NEXT.md) separada, sin activar proximidad hasta corroborar datos.
 
 ## Despliegue inicial documentado
 

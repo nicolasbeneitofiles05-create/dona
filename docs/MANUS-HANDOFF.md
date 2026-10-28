@@ -1,5 +1,7 @@
 # Encargo manual para Manus
 
+Siguiente iteración preparada por separado: [portada móvil breve](MANUS-NEXT-MOBILE.md) y [fase geográfica](GEOGRAPHY-NEXT.md). Este documento conserva el contexto del encargo inicial ya entregado en #5.
+
 Este documento registra el encargo manual inicial. Manus ha entregado el PR #5 y sus cambios técnicos de móvil/accesibilidad se han revisado y publicado. No existe integración automática ni evidencia de otro encargo en ejecución. La siguiente iteración se preparará por separado, sobre el SHA vigente.
 
 ## Punto de partida exacto
