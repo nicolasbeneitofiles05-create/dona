@@ -4,7 +4,16 @@ Guía independiente de canales oficiales de donación de sangre en España.
 
 Web: https://dona-2fp.pages.dev
 
-## Estado comprobado — 28/10/2026
+## Estado del trabajo — 28/10/2026
+
+Esta rama contiene correcciones pendientes de revisión; **no se han publicado**. PR #1 sigue abierto (importación); PR #2 contiene fiabilidad sanitaria; la siguiente rama apila móvil, accesibilidad e inventario. La producción conserva su versión inicial y puede mostrar los avisos retirados aquí.
+
+- Se retiran llamamientos no corroborados; la única campaña contrastada caduca con fecha fija. Ver [auditoría](docs/SOURCE-AUDIT.md).
+- Pruebas ejecutadas en Edge: seis CP, inválidos, aviso falso, caducidad y recarga, teclado, enlaces internos y cinco anchuras. Ver [validación](docs/VALIDATION.md).
+- Inventario documental parcial, sin coordenadas inventadas, geocodificación ni distancias. Ver [geografía](docs/GEOGRAPHY.md).
+- Manus y Venice no están integrados ni hay evidencia de trabajo en curso. El [encargo para Manus](docs/MANUS-HANDOFF.md) es un documento para entrega manual.
+
+## Despliegue inicial documentado
 
 - Cloudflare Pages, proyecto `dona`, rama de producción `main`.
 - Despliegue inicial: `56ba485b-466f-4913-8682-474e8507028d`.
@@ -24,3 +33,15 @@ No publicar otra versión hasta comparar cambios, comprobar fuentes sanitarias y
 ## Reglas
 
 No inventar necesidades, horarios, centros, fuentes ni distancias. No anunciar tiempo real. No recoger datos médicos ni credenciales en frontend. Los borradores legales requieren validación humana.
+
+## Comprobaciones locales (sin publicar)
+
+```sh
+python scripts/build.py
+node scripts/test-notices.cjs
+npm install --no-save --package-lock=false --prefix .tools playwright
+node scripts/test-browser.cjs
+python scripts/check-links.py
+```
+
+La prueba de navegador usa Edge de Windows. En otro entorno, indicar su ejecutable mediante `BROWSER_PATH`. Playwright solo se utiliza para desarrollo; no se añade a la web. `dist/` y `.tools/` no se versionan. El inventario JSON es documental y no se sirve desde el worker actual. No hay GitHub Actions recurrentes.
