@@ -273,6 +273,10 @@ const familyPanel=document.querySelector('#ayuda-urda .urda-assist-expander');
 function revealFamilyHelp(){if(location.hash==='#ayuda-urda' && familyPanel) familyPanel.open=true;}
 revealFamilyHelp();
 window.addEventListener('hashchange',revealFamilyHelp);
+// La activación repetida del mismo hash no dispara hashchange; abrir también al hacer clic.
+document.querySelectorAll('a[href="#ayuda-urda"]').forEach(link=>{
+ link.addEventListener('click',()=>{if(familyPanel)familyPanel.open=true;});
+});
 // Recalcular al volver a la pestaña y al cruzar la caducidad, sin renovar fechas.
 setInterval(renderNotices,60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)renderNotices();});
