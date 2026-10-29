@@ -22,6 +22,7 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
   assert.equal(await (await page.request.get(url)).text(),readFileSync('index.html','utf8'),'worker conserva el HTML completo');
   assert.equal(await page.locator('.directory-disclosure').getAttribute('open'),null,'directorio cerrado inicialmente');
   assert(await page.getByText('Ver el directorio regional',{exact:true}).isVisible());
+  assert.equal(await page.locator('nav[aria-label="Navegación"] a').first().getAttribute('href'),'#alertas','mantener Avisos como primer enlace responsive');
   assert.equal(await page.evaluate(()=>noticeState({...reviewedNotices[0],expires_at:'2026-10-29T01:00:00+01:00'},Date.parse('2026-10-28T23:00:00Z'))),'active','fixture activo visible');
   assert.equal(await page.locator('#eventCards .label').innerText(),'Campaña contrastada','aviso vigente visible');
   assert.equal(await page.locator('.history-panel').getAttribute('open'),null,'historial cerrado inicialmente');
