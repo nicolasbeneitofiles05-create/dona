@@ -6,12 +6,12 @@ Web: https://dona-2fp.pages.dev
 
 ## Estado del trabajo — 29/10/2026
 
-PR #1, #2, #3 y #5 fusionados. **Producción comprobada**: SHA `aba4b83f254d001e890b2c3b6bad175a2cf32c90`, despliegue `0d423adf-7e19-4506-aaf7-2c2d48c63d58`. El HTML público coincide byte a byte con el artefacto validado. Avisos retirados ausentes y campaña conservada caducada. #5 aporta mejoras técnicas de móvil/accesibilidad; la portada aún requiere una reducción importante. Evidencia y recuperación en [PRODUCTION.md](docs/PRODUCTION.md).
+DONA 2.0 publicada y comprobada: SHA `243d030129526b19252afb622e6f687e8515f0c5`, despliegue `bef4a785-2b3c-4813-812d-8cf72438c718`. #9 y #13 fusionados en ese orden. HTML público idéntico al artefacto; mensaje de avisos no exhaustivo y estado vacío compacto. Pruebas, hashes y rollback en [DONA2-RELEASE.md](docs/DONA2-RELEASE.md).
 
 - Se retiran llamamientos no corroborados; la única campaña contrastada caduca con fecha fija. Ver [auditoría](docs/SOURCE-AUDIT.md).
 - Pruebas ejecutadas en Edge: seis CP, inválidos, aviso falso, caducidad y recarga, teclado, enlaces internos y cinco anchuras. Ver [validación](docs/VALIDATION.md).
 - Inventario documental parcial, sin coordenadas inventadas, geocodificación ni distancias. Ver [geografía](docs/GEOGRAPHY.md).
-- Manus entregó el PR #5, ya revisado y publicado. No hay integración automática ni evidencia de trabajo adicional en curso. El [encargo para Manus](docs/MANUS-HANDOFF.md) es un documento para entrega manual.
+- #12 revisado con ocho pruebas y cinco destinos oficiales contrastados, todavía sin consumo en UI: [preparación de integración](docs/PR12-INTEGRATION-REVIEW.md). #8 permanece separado hasta validar inventario y coordenadas. No hay integración automática ni evidencia de un nuevo encargo de Manus en curso.
 
 ## Despliegue inicial documentado
 

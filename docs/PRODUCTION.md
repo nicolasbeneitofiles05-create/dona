@@ -1,6 +1,8 @@
 # Publicación comprobada · 29/10/2026
 
-## Versión vigente tras PR #5
+Versión vigente: DONA 2.0, SHA `243d030129526b19252afb622e6f687e8515f0c5`, despliegue `bef4a785-2b3c-4813-812d-8cf72438c718`. Registro completo, comprobaciones públicas y rollback en [DONA2-RELEASE.md](DONA2-RELEASE.md).
+
+## Registro histórico tras PR #5
 
 - SHA publicado: `aba4b83f254d001e890b2c3b6bad175a2cf32c90`, rama `main` al fusionar #5.
 - URL pública: https://dona-2fp.pages.dev
