@@ -48,7 +48,17 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
   }
   await page.locator('#postal').fill('28007');await page.locator('#postal').press('Enter');assert.equal(await page.locator('#postal').getAttribute('aria-invalid'),'false');assert.equal(await page.locator('#searchResult').getAttribute('role'),'status','éxito role status');
   const links=await page.locator('a').evaluateAll(nodes=>nodes.map(n=>({href:n.getAttribute('href'),target:n.target,rel:n.rel})));
-  for(const link of links){if(link.href.startsWith('#'))assert.equal(await page.locator(link.href).count(),1,link.href);else{assert(link.href.startsWith('https://'));assert(link.rel.includes('noopener'));}}
+  for(const link of links){if(link.href.startsWith('#'))assert.equal(await page.locator(link.href).count(),1,link.href);else if(link.href.startsWith('tel:')){assert(['tel:+34900122112','tel:+34900101020','tel:+34900001403'].includes(link.href),'solo teléfonos contrastados');}else{assert(link.href.startsWith('https://'));assert(link.rel.includes('noopener'));}}
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'ayuda Urda plegada al cargar');
+  await page.locator('#ayuda-urda summary').click();
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),'','ayuda se despliega');
+  const crisisNumbers=await page.locator('#ayuda-urda a[href^="tel:"]').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')).sort());
+  assert.deepEqual(crisisNumbers,['tel:+34900001403','tel:+34900101020','tel:+34900122112'].sort(),'teléfonos de asistencia exactos');
+  assert.equal(await page.locator('#ayuda-urda form, #ayuda-urda input, #ayuda-urda textarea').count(),0,'sin captación de datos personales');
+  assert(await page.locator('#ayuda-urda').innerText().then(t=>t.includes('No tenemos confirmación de necesidades sanguíneas concretas')),'sin inventar stock');
+  assert.equal(await page.locator('#ayuda-urda a[href="https://www.adif.es/viajeros/estado-de-la-red"]').count(),1,'canal ferroviario oficial');
+  await page.locator('#ayuda-urda summary').press('Enter');
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'ayuda se cierra por teclado');
   assert.equal(await page.locator('#eventCards .label').innerText(),'Campaña contrastada');
   await page.locator('.directory-disclosure summary').click();
   assert.equal(await page.locator('.directory-disclosure').getAttribute('open'),'');
