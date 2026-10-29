@@ -19,7 +19,7 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
   const initialAt=async(width,height)=>{await page.setViewportSize({width,height});await page.goto(url);return measure()};
   const resultAt=async(cp)=>{await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');return measure()};
   await page.goto(url);
-  assert.equal(await (await page.request.get(url)).text(),readFileSync('index.html','utf8'),'worker conserva el HTML completo');
+  assert.equal(await (await page.request.get(url)).text(),readFileSync('dist/index.html','utf8'),'worker conserva el HTML compilado completo');
   assert.equal(await page.locator('.directory-disclosure').getAttribute('open'),null,'directorio cerrado inicialmente');
   assert(await page.getByText('Ver el directorio regional',{exact:true}).isVisible());
   assert.equal(await page.evaluate(()=>noticeState({...reviewedNotices[0],expires_at:'2026-10-29T01:00:00+01:00'},Date.parse('2026-10-28T23:00:00Z'))),'active','fixture activo visible');
@@ -32,14 +32,19 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
    const text=await page.locator('#searchResult').innerText();
    assert(text.includes(province),cp); assert(text.includes('No estamos calculando distancias'));
    assert.equal(await page.locator('#searchResult .result-main').count(),1,'una única acción principal '+cp);
-   if(cp==='03801')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://centro-transfusion.san.gva.es/es/puntos-de-donacion');
-   if(cp==='28007')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://www.comunidad.madrid/salud/donacion-sangre');
+   if(cp==='03801')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://centro-transfusion.san.gva.es/es/puntos-de-donacion-alicante');
+   if(cp==='28007'){assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://donarsangre.sanidadmadrid.org/moviles.aspx');assert((await page.locator('.result-scope').innerText()).includes('puntos móviles'));}
    if(cp==='13001'||cp==='45001')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://sanidad.castillalamancha.es/ciudadanos/hazte-donante-sangre/colectas-donantes-de-sangre');
    if(cp==='51001'||cp==='52001')assert.equal(await page.locator('#searchResult .result-main').getAttribute('href'),'https://www.sanidad.gob.es/profesionales/saludPublica/medicinaTransfusional/dondedonar.htm',cp+' usa el directorio estatal exacto');
    assert.equal(new URL(await page.locator('#searchResult .result-main').getAttribute('href')).protocol,'https:',cp+' destino HTTPS');
    if(cp==='13001')assert(!(text.includes('Colectas Toledo')));
    if(cp==='45001')assert(!(text.includes('Colectas Ciudad Real')));
   }
+  for(const [cp,ending,label] of [['03440','alicante','Alicante'],['12001','castellon','Castellón'],['46001','valencia','Valencia'],['08001','calendario/','Cataluña'],['17001','calendario/','Cataluña'],['25001','calendario/','Cataluña'],['43001','calendario/','Cataluña']]){
+   await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');
+   assert((await page.locator('.result-main').getAttribute('href')).endsWith(ending));assert((await page.locator('.result-main').innerText()).includes(label));
+  }
+  for(const cp of ['51001','52001']){await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');assert((await page.locator('.result-main').innerText()).includes('Consultar directorio estatal'));assert((await page.locator('.result-scope').innerText()).includes('Orientación parcial'));}
   for(const cp of ['','0380','abcde','00000','99001','Ceuta','Melilla']){
    await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');
    assert.equal(await page.locator('#postal').getAttribute('aria-invalid'),'true',cp);

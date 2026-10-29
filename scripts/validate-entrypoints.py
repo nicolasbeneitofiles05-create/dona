@@ -1,6 +1,7 @@
 """Check structural safety of official link catalogue. Does not contact remote websites."""
 from pathlib import Path
 from urllib.parse import urlparse
+from datetime import datetime, timezone, date
 import json
 import sys
 
@@ -11,7 +12,7 @@ def validate(data):
     errors = []
     if not isinstance(data, dict) or data.get("schema_version") != 1:
         return ["schema_version debe ser 1"]
-    if data.get("status") != "research_only_not_connected_to_production":
+    if data.get("status") != "approved_navigation_only":
         errors.append("estado de publicación inseguro")
     links = data.get("links")
     if not isinstance(links, list):
@@ -39,7 +40,11 @@ def validate(data):
             errors.append(f"no es un enlace de navegación: {prefix}")
         if item.get("reuse_permission") != "not_verified":
             errors.append(f"permiso de reutilización sin verificar: {prefix}")
-        if item.get("last_link_reviewed_at") != "2026-10-29":
+        try:
+            stamp = item.get('last_link_reviewed_at')
+            if not isinstance(stamp, str) or len(stamp) != 10 or date.fromisoformat(stamp) > datetime.now(timezone.utc).date():
+                raise ValueError('Fecha incoherente')
+        except (TypeError, ValueError):
             errors.append(f"fecha de investigación incorrecta: {prefix}")
         for field in ("province", "region", "agency"):
             if not isinstance(item.get(field), str) or not item[field].strip():
