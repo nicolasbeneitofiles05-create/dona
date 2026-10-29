@@ -12,7 +12,7 @@ Piloto **estático, editorial y no publicado** preparado para el accidente ferro
 | Accidente ferroviario en Urda; línea familiar gratuita 900 122 112 | [112 Castilla-La Mancha / PLATECAM](https://112.castillalamancha.es/112/emergencias-e-incidencias/platecam-activado-en-la-provincia-de-toledo) | 28/10/2026 |
 | Renfe: plan de asistencia a viajeros/víctimas/familiares y teléfono 900 10 10 20 | [Renfe](https://grupo.renfe.com/es/es/sala-de-prensa/noticias/2026/10/comunicado-renfe-accidente-urda) | 28/10/2026 |
 | Iryo: asistencia a pasajeros y familiares, 900 001 403 | [Comunicado de Iryo](https://iryo.eu/en/new/comunicado-de-prensa-accidente-ferroviario-en-urda) | 28/10/2026 |
-| Adif comunica puntos de atención en Atocha, Santa Justa, Córdoba y Málaga, y publica estado de red | [Estado de la red / Adif](https://www.adif.es/viajeros/estado-de-la-red) | 28/10/2026 |
+| Adif informa sobre puntos de atención en Atocha, Santa Justa y Córdoba-Julio Anguita; la disponibilidad puede variar | [Estado de la red / Adif](https://www.adif.es/viajeros/estado-de-la-red) | 28/10/2026 |
 
 **Discrepancia**: notas de 112 citan también 655 28 69 75 para Iryo, mientras que la propia compañía y Adif publican el 900 001 403. DONA selecciona la referencia **de la propia compañía** y enlaza el comunicado para que el usuario confirme. No se deduce que el otro número sea fraudulento.
 
