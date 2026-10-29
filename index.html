@@ -66,6 +66,11 @@
  .hero-route{display:none}
 }
 
+/* El estado vacío no hereda la altura del historial abierto. */
+.active-notice.is-empty{align-self:start;padding:16px 18px}
+.active-notice.is-empty .notice-bar{margin-bottom:8px}
+.active-notice.is-empty>#eventCards>p{margin:0;max-width:65ch;line-height:1.5}
+.notice-review{margin:0 0 14px;color:var(--muted)}
 </style>
 </head><body>
 <a class="skip-link" href="#inicio">Saltar al contenido</a>
@@ -91,6 +96,7 @@
 </section>
 <section class="notices-section container" id="alertas" aria-labelledby="noticesTitle">
  <div class="section-heading"><div><div class="eyebrow">Información revisada</div><h2 id="noticesTitle">Avisos sanitarios</h2></div><p class="section-intro">Solo destacamos comunicaciones vigentes y contrastadas.</p></div>
+ <p class="notice-review small">Última revisión editorial: <time datetime="2026-10-28T22:50:00Z">28/10/2026, 23:50 (Madrid)</time>. Revisión manual, sin catálogo exhaustivo de campañas.</p>
  <div class="notice-grid">
   <section class="active-notice" aria-labelledby="activeTitle"><div class="notice-bar"><h3 id="activeTitle">Vigentes</h3><span>Revisión manual</span></div><div id="eventCards" aria-live="polite"></div></section>
   <details class="history-panel"><summary><span>Historial editorial</span><small>Fuentes, fechas y caducidades</small></summary><div id="historyCards" aria-live="polite"></div></details>
@@ -154,7 +160,8 @@ function renderNotices(){
  const activeWrap=document.getElementById('eventCards'),historyWrap=document.getElementById('historyCards');activeWrap.replaceChildren();historyWrap.replaceChildren();
  const card=(item,state)=>{const article=document.createElement('article');article.className='card';const tag=document.createElement('span');tag.className='label '+(state==='expired'?'old':'');tag.textContent=state==='expired'?'Caducado · no es un aviso activo':'Campaña contrastada';const h=document.createElement('h3');h.textContent=item.title;const info=document.createElement('p');info.textContent=state==='expired'?'La vigencia editorial ha terminado. Consulta el canal oficial para información actual.':item.message;const dates=document.createElement('p');dates.className='small';const date=value=>new Date(value).toLocaleString('es-ES',{timeZone:'Europe/Madrid',dateStyle:'short',timeStyle:'short'});dates.textContent='Publicación: '+item.published_at+' · Última comprobación: '+date(item.checked_at)+' · Caducidad editorial: '+date(item.expires_at)+' (Madrid). No indica horario de atención.';const source=document.createElement('div');source.className='source';source.textContent='Fuente: '+item.source_name;const a=document.createElement('a');a.href=item.source_url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Consultar comunicación oficial ↗';source.append(a);article.append(tag,h,info,dates,source);return article;};
  for(const item of reviewedNotices){const state=noticeState(item);if(state==='withdrawn')continue;if(state==='active')activeWrap.append(card(item,state));if(state==='expired')historyWrap.append(card(item,state));}
- if(!activeWrap.children.length){const empty=document.createElement('p');empty.textContent='No hay avisos vigentes. Consulta siempre el canal oficial antes de desplazarte.';activeWrap.append(empty);}
+ activeWrap.closest('.active-notice').classList.toggle('is-empty',!activeWrap.children.length);
+ if(!activeWrap.children.length){const empty=document.createElement('p');empty.textContent='DONA no tiene avisos activos verificados para mostrar. Puede haber campañas en los canales oficiales: consúltalos antes de desplazarte.';activeWrap.append(empty);}
  if(!historyWrap.children.length){const empty=document.createElement('p');empty.textContent='Todavía no hay comunicaciones caducadas en el historial.';historyWrap.append(empty);}
 }
 renderNotices();
