@@ -122,6 +122,19 @@
 @media(max-width:600px){.urda-assist{padding:22px 0}.urda-assist-grid,.urda-assist-foot{grid-template-columns:1fr}.urda-assist-grid>:first-child{grid-column:auto}.urda-contact{padding:16px}.urda-assist-header h2{font-size:28px}.urda-contact .urda-tel{font-size:24px}}
 
 /* DONA RADAR: a dated editorial index, never a live incident status board. */
+.radar-shell{padding:0!important;overflow:hidden}
+.radar-summary{display:flex;justify-content:space-between;align-items:center;gap:15px;cursor:pointer;padding:22px 26px;list-style:none;min-height:92px}
+.radar-summary::-webkit-details-marker{display:none}
+.radar-summary>span:first-child{display:flex;flex-direction:column;gap:3px}
+.radar-summary strong{font-size:20px;line-height:1.25;letter-spacing:-.025em}
+.radar-summary small{font-size:12px;color:#e3d4d3}
+.radar-summary-action{display:flex;align-items:center;gap:10px;white-space:nowrap;font-size:12px;font-weight:750;color:#f6e8e7}
+.radar-summary-action span{font-size:24px;line-height:1}
+.radar-expander[open] .radar-summary-action span{transform:rotate(45deg)}
+.radar-summary:focus-visible{outline:3px solid #f3a0aa;outline-offset:-4px}
+.radar-inner{border-top:1px solid #67575a;padding:22px 26px 26px}
+@media(max-width:600px){.radar-summary{padding:15px;align-items:start;flex-direction:column}.radar-summary strong{font-size:18px}.radar-summary-action{white-space:normal}.radar-inner{padding:16px 15px}}
+
 .radar-section{padding-top:32px;padding-bottom:34px}
 .radar-shell{background:#302a2b;color:#fff;border-radius:18px;padding:26px 28px;box-shadow:0 12px 34px rgba(40,21,20,.08)}
 .radar-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:22px}
@@ -243,8 +256,14 @@
 </section>
 
 
-<section class="radar-section container" id="radar" aria-labelledby="radarTitle">
+<section class="radar-section container" id="radar" aria-labelledby="radarSummaryTitle">
  <div class="radar-shell">
+  <details class="radar-expander" id="radarExpander">
+   <summary class="radar-summary">
+    <span><span class="radar-kicker">DONA RADAR · Registro editorial</span><strong id="radarSummaryTitle">Comunicados oficiales sobre Urda</strong><small>5 fuentes documentadas · revisión 29/10/2026</small></span>
+    <span class="radar-summary-action">Ver fuentes y cronología <span aria-hidden="true">+</span></span>
+   </summary>
+   <div class="radar-inner">
   <div class="radar-heading">
    <div><span class="radar-kicker">DONA RADAR · Publicaciones oficiales</span>
     <h2 id="radarTitle">Comunicados con fuente y fecha.</h2>
@@ -260,6 +279,8 @@
   <div id="radarLatest" class="radar-items" aria-label="Primeros comunicados documentados"></div>
   <details class="radar-more" id="radarMoreDisclosure"><summary><span>Consultar el resto de fuentes</span><small id="radarMoreCount">Fuentes adicionales</small></summary><div id="radarMore" class="radar-items"></div></details>
   <p id="radarDisclaimer" class="radar-disclaimer">Una publicación contrastada no demuestra que un teléfono o dispositivo siga operativo. Compara la fecha de origen, la fecha de revisión y el enlace oficial. No hay noticias ni necesidades sanitarias en tiempo real.</p>
+   </div>
+  </details>
  </div>
 </section>
 
@@ -385,6 +406,12 @@ function renderRadar(){
  }
 }
 renderRadar();
+// Abrir solo cuando alguien solicita explícitamente la cronología.
+const radarPanel=document.getElementById('radarExpander');
+function revealRadar(){if(location.hash==='#radar' && radarPanel)radarPanel.open=true;}
+revealRadar();
+window.addEventListener('hashchange',revealRadar);
+document.querySelectorAll('a[href="#radar"]').forEach(link=>link.addEventListener('click',()=>{if(radarPanel)radarPanel.open=true;}));
 
 // Deep link independiente para familias: /#ayuda-urda abre los teléfonos sin alterar el buscador.
 const familyPanel=document.querySelector('#ayuda-urda .urda-assist-expander');
