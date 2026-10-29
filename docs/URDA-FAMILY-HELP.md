@@ -12,7 +12,15 @@ Piloto **estático, editorial y no publicado** preparado para el accidente ferro
 | Accidente ferroviario en Urda; línea familiar gratuita 900 122 112 | [112 Castilla-La Mancha / PLATECAM](https://112.castillalamancha.es/112/emergencias-e-incidencias/platecam-activado-en-la-provincia-de-toledo) | 28/10/2026 |
 | Renfe: plan de asistencia a viajeros/víctimas/familiares y teléfono 900 10 10 20 | [Renfe](https://grupo.renfe.com/es/es/sala-de-prensa/noticias/2026/10/comunicado-renfe-accidente-urda) | 28/10/2026 |
 | Iryo: asistencia a pasajeros y familiares, 900 001 403 | [Comunicado de Iryo](https://iryo.eu/en/new/comunicado-de-prensa-accidente-ferroviario-en-urda) | 28/10/2026 |
-| Adif informa sobre puntos de atención en Atocha, Santa Justa y Córdoba-Julio Anguita; la disponibilidad puede variar | [Estado de la red / Adif](https://www.adif.es/viajeros/estado-de-la-red) | 28/10/2026 |
+| Adif publicó puntos de atención en Atocha, Santa Justa, Córdoba-Julio Anguita y Málaga-María Zambrano; disponibilidad en directo no comprobada | [Estado de la red / Adif](https://www.adif.es/viajeros/estado-de-la-red) | 28/10/2026 |
+
+| Guardia Civil: oficinas para familiares de primer grado, sin registro público de víctimas en DONA | [Aviso oficial de la Guardia Civil](https://web.guardiacivil.es/eu/destacados/eventos/La-Guardia-Civil-ha-habilitado-diferentes-oficinas-para-que-acudan-los-familiares-de-primer-grado-de-las-victimas-del-accidente-ferroviario/) | 28/10/2026 |
+| Renfe: servicio alternativo, cambios y anulaciones sin coste para viajeros afectados | [Renfe: comunicado y servicios alternativos](https://grupo.renfe.com/es/es/sala-de-prensa/noticias/2026/10/comunicado-renfe-accidente-urda) | 28/10/2026 |
+| Iryo: cambios y anulaciones gratuitos para los servicios afectados | [Iryo: comunicado](https://iryo.eu/en/new/comunicado-de-prensa-accidente-ferroviario-en-urda) | 28/10/2026 |
+
+**Oficinas comunicadas por Guardia Civil (solo familiares de primer grado):** Madrid, Calle Batalla del Salado 32; Sevilla, Avenida de la Borbolla 8; Córdoba, acceso por Avenida de los Mozaharabes; Toledo, Avenida Barber 42. Procedimiento, elegibilidad y vigencia deben comprobarse en el aviso oficial. La información procede de una comunicación del 28/10 y **no implica atención abierta en directo**.
+
+**Enlace directo a la sección:** `/#ayuda-urda` abre el desplegable al entrar con URL anclada, sin recopilar información del visitante. La búsqueda por CP y los avisos mantienen su funcionamiento previo.
 
 **Discrepancia**: notas de 112 citan también 655 28 69 75 para Iryo, mientras que la propia compañía y Adif publican el 900 001 403. DONA selecciona la referencia **de la propia compañía** y enlaza el comunicado para que el usuario confirme. No se deduce que el otro número sea fraudulento.
 
@@ -35,7 +43,7 @@ Para una futura plataforma de seguimiento, definir un esquema `source_url`, `pub
 
 ## Desarrollo técnico y pruebas
 
-- Solo cambia `index.html` y `scripts/test-browser.cjs`. La sección es un `<details>` plegado inicialmente, para conservar la tarea rápida de código postal en primera pantalla.
+- Solo cambia `index.html` y `scripts/test-browser.cjs` en ejecución; este archivo documenta alcance y verificación. La sección es un `<details>` plegado inicialmente (salvo acceso con `/#ayuda-urda`), para conservar la tarea rápida de código postal en primera pantalla.
 - Telefonía con `tel:` y fuentes `https:`; no hay formularios de recopilación de datos de afectados.
 - Las pruebas añaden verificación de los tres enlaces telefónicos exactos, desplegable/teclado, fuente Adif y ausencia de formularios. Mantienen las pruebas existentes de códigos postales, enlaces, caducidad, fiabilidad y anchuras.
 - **Sin despliegue** hasta ejecutar los tests de navegador, revisar visualmente 320×568/390×844/1440 y confirmar fuentes por segunda vez.
