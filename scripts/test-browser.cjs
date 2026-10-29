@@ -58,8 +58,19 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
   assert.equal(await page.locator('#ayuda-urda form, #ayuda-urda input, #ayuda-urda textarea').count(),0,'sin captación de datos personales');
   assert(await page.locator('#ayuda-urda').innerText().then(t=>t.includes('No tenemos confirmación de necesidades sanguíneas concretas')),'sin inventar stock');
   assert.equal(await page.locator('#ayuda-urda a[href="https://www.adif.es/viajeros/estado-de-la-red"]').count(),1,'canal ferroviario oficial');
+  const familyText=await page.locator('#ayuda-urda').innerText();
+  for(const location of ['Madrid','Toledo','Córdoba','Sevilla','Málaga'])assert(familyText.includes(location),'asistencia oficial y ciudades '+location);
+  assert(familyText.includes('familiares de primer grado'),'identificación solo a familiares pertinentes');
+  assert(familyText.includes('anulaciones gratuitos'),'cambios y anulaciones de operadores');
+  assert.equal(await page.locator('#ayuda-urda a[href^="https://web.guardiacivil.es/"]').count(),1,'fuente de Guardia Civil');
+
   await page.locator('#ayuda-urda summary').press('Enter');
   assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'ayuda se cierra por teclado');
+  await page.goto(url+'/#ayuda-urda');
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),'','enlace directo a familias despliega los teléfonos');
+  await page.goto(url);
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'sin hash el panel conserva cierre inicial');
+
   assert.equal(await page.locator('#eventCards .label').innerText(),'Campaña contrastada');
   await page.locator('.directory-disclosure summary').click();
   assert.equal(await page.locator('.directory-disclosure').getAttribute('open'),'');
