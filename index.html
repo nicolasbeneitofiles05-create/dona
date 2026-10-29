@@ -104,6 +104,10 @@
 .urda-assist-note p{margin:0 0 9px;color:#514b46;font-size:14px}
 .urda-assist-note a{font-weight:800;color:var(--brand-dark)}
 .urda-assist-caution{margin:14px 0 0;font-size:12px;line-height:1.55;color:var(--muted)}
+.urda-additional-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.urda-extra-links{display:flex;flex-wrap:wrap;gap:10px 20px}
+@media(max-width:600px){.urda-additional-grid{grid-template-columns:1fr}}
+
 @media(max-width:850px){.urda-assist-grid{grid-template-columns:1fr 1fr}.urda-assist-grid>:first-child{grid-column:1/-1}.urda-assist-header{align-items:start;flex-direction:column}.urda-assist-date{text-align:left}}
 @media(max-width:600px){.urda-assist{padding:22px 0}.urda-assist-grid,.urda-assist-foot{grid-template-columns:1fr}.urda-assist-grid>:first-child{grid-column:auto}.urda-contact{padding:16px}.urda-assist-header h2{font-size:28px}.urda-contact .urda-tel{font-size:24px}}
 </style>
@@ -163,13 +167,29 @@
  <div class="urda-assist-foot">
   <div class="urda-assist-note">
    <h3>Puntos de asistencia y desplazamientos</h3>
-   <p>Adif publica puntos de atención a afectados en Madrid-Puerta de Atocha, Sevilla-Santa Justa y Córdoba-Julio Anguita. La disponibilidad puede cambiar: compruébala en Adif antes de desplazarte.</p>
+   <p>Adif comunicó puntos de atención a afectados en Madrid-Puerta de Atocha, Sevilla-Santa Justa, Córdoba-Julio Anguita y Málaga-María Zambrano. La disponibilidad puede cambiar: compruébala en Adif antes de desplazarte.</p>
    <a href="https://www.adif.es/viajeros/estado-de-la-red" target="_blank" rel="noopener noreferrer">Consultar Adif y estado ferroviario ↗</a>
   </div>
   <div class="urda-assist-note">
    <h3>Donar sangre y ayudar</h3>
    <p>No tenemos confirmación de necesidades sanguíneas concretas, saturación hospitalaria ni llamamientos vigentes para este accidente. Consulta primero el organismo sanitario de tu provincia.</p>
    <a href="#buscar">Encontrar el canal oficial de donación ↗</a>
+  </div>
+ </div>
+
+ <div class="urda-additional-grid">
+  <div class="urda-assist-note">
+   <h3>Si eres familiar directo y necesitas información</h3>
+   <p>La Guardia Civil publicó cuatro oficinas de atención a familiares de primer grado para los trámites de identificación: Madrid (Batalla del Salado, 32), Toledo (Avenida Barber, 42), Córdoba (acceso por Avenida de los Mozárabes) y Sevilla (Avenida de la Borbolla, 8). Comprueba el procedimiento y si el dispositivo sigue operativo antes de acudir.</p>
+   <a href="https://web.guardiacivil.es/eu/destacados/eventos/La-Guardia-Civil-ha-habilitado-diferentes-oficinas-para-que-acudan-los-familiares-de-primer-grado-de-las-victimas-del-accidente-ferroviario/" target="_blank" rel="noopener noreferrer">Leer el aviso oficial de la Guardia Civil ↗</a>
+  </div>
+  <div class="urda-assist-note">
+   <h3>Si tu tren se ha cancelado</h3>
+   <p>Renfe e Iryo anunciaron cambios y anulaciones gratuitos para los viajes afectados. Las condiciones y alternativas dependen de cada compañía y servicio. Las líneas de atención a víctimas se reservan para personas afectadas y familiares.</p>
+   <div class="urda-extra-links">
+    <a href="https://grupo.renfe.com/es/es/sala-de-prensa/noticias/2026/10/comunicado-renfe-accidente-urda" target="_blank" rel="noopener noreferrer">Renfe · Transporte y cambios ↗</a>
+    <a href="https://iryo.eu/en/new/comunicado-de-prensa-accidente-ferroviario-en-urda" target="_blank" rel="noopener noreferrer">Iryo · Cambios y anulaciones ↗</a>
+   </div>
   </div>
  </div>
  <p class="urda-assist-caution"><strong>Privacidad y seguridad:</strong> DONA no recibe listados de personas, fotografías, vídeos, datos de hospitales ni solicitudes de búsqueda de familiares. No compartas datos privados de afectados. Si existe una emergencia inmediata, llama al 112. Las noticias, los datos provisionales y los puntos de asistencia pueden cambiar: verifica siempre el comunicado original.</p>
@@ -248,6 +268,11 @@ function renderNotices(){
  if(!historyWrap.children.length){const empty=document.createElement('p');empty.textContent='Todavía no hay comunicaciones caducadas en el historial.';historyWrap.append(empty);}
 }
 renderNotices();
+// Deep link independiente para familias: /#ayuda-urda abre los teléfonos sin alterar el buscador.
+const familyPanel=document.querySelector('#ayuda-urda .urda-assist-expander');
+function revealFamilyHelp(){if(location.hash==='#ayuda-urda' && familyPanel) familyPanel.open=true;}
+revealFamilyHelp();
+window.addEventListener('hashchange',revealFamilyHelp);
 // Recalcular al volver a la pestaña y al cruzar la caducidad, sin renovar fechas.
 setInterval(renderNotices,60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)renderNotices();});
