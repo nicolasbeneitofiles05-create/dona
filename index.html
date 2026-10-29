@@ -71,10 +71,33 @@
 .active-notice.is-empty .notice-bar{margin-bottom:8px}
 .active-notice.is-empty>#eventCards>p{margin:0;max-width:65ch;line-height:1.5}
 .notice-review{margin:0 0 14px;color:var(--muted)}
+
+
+/* Independent crisis-help panel: factual, calm, accessible, never a live incident feed. */
+.urda-assist{padding:28px 0 30px;border-bottom:1px solid var(--line)}
+.urda-assist-header{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:18px}
+.urda-assist h2{font-size:clamp(27px,3vw,36px);line-height:1.15;letter-spacing:-.04em;margin:6px 0 10px}
+.urda-assist-header p{max-width:72ch;margin:0;color:var(--muted);font-size:15px}
+.urda-assist-label{display:inline-flex;gap:8px;align-items:center;color:var(--brand-dark);font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.urda-assist-date{flex:0 0 auto;color:var(--muted);font-size:12px;text-align:right;max-width:220px}
+.urda-assist-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.urda-contact{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-width:0}
+.urda-contact small{font-weight:700;color:var(--muted)}
+.urda-contact strong{font-size:18px;line-height:1.23}
+.urda-contact .urda-tel{font-size:clamp(20px,2.4vw,27px);font-weight:850;font-variant-numeric:tabular-nums;color:var(--brand-dark);white-space:nowrap;text-decoration:underline;text-underline-offset:4px}
+.urda-contact .urda-source{font-size:13px;color:var(--brand-dark);font-weight:750;margin-top:auto}
+.urda-assist-foot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.urda-assist-note{background:#eeebe6;border:1px solid #e1dbd1;border-radius:12px;padding:16px 18px;color:var(--text)}
+.urda-assist-note h3{font-size:16px;margin:0 0 7px}
+.urda-assist-note p{margin:0 0 9px;color:#514b46;font-size:14px}
+.urda-assist-note a{font-weight:800;color:var(--brand-dark)}
+.urda-assist-caution{margin:14px 0 0;font-size:12px;line-height:1.55;color:var(--muted)}
+@media(max-width:850px){.urda-assist-grid{grid-template-columns:1fr 1fr}.urda-assist-grid>:first-child{grid-column:1/-1}.urda-assist-header{align-items:start;flex-direction:column}.urda-assist-date{text-align:left}}
+@media(max-width:600px){.urda-assist{padding:22px 0}.urda-assist-grid,.urda-assist-foot{grid-template-columns:1fr}.urda-assist-grid>:first-child{grid-column:auto}.urda-contact{padding:16px}.urda-assist-header h2{font-size:28px}.urda-contact .urda-tel{font-size:24px}}
 </style>
 </head><body>
 <a class="skip-link" href="#inicio">Saltar al contenido</a>
-<header><div class="container head"><a class="logo" href="#inicio"><span class="drop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.5C9 7.1 5 10.8 5 15a7 7 0 0 0 14 0c0-4.2-4-7.9-7-12.5Z" fill="currentColor"/></svg></span>DONA<span class="brand-tagline">GUÍA INDEPENDIENTE</span></a><nav aria-label="Navegación"><a href="#alertas">Avisos</a><a href="#comunidades">Comunidades</a><a class="nav-cta" href="#buscar">Buscar dónde donar</a></nav></div></header>
+<header><div class="container head"><a class="logo" href="#inicio"><span class="drop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2.5C9 7.1 5 10.8 5 15a7 7 0 0 0 14 0c0-4.2-4-7.9-7-12.5Z" fill="currentColor"/></svg></span>DONA<span class="brand-tagline">GUÍA INDEPENDIENTE</span></a><nav aria-label="Navegación"><a href="#ayuda-urda">Ayuda Urda</a><a href="#alertas">Avisos</a><a href="#comunidades">Comunidades</a><a class="nav-cta" href="#buscar">Buscar dónde donar</a></nav></div></header>
 <main id="inicio" tabindex="-1">
 <section class="redesign-hero container" aria-labelledby="pageTitle">
  <div class="hero-copy">
@@ -94,6 +117,51 @@
   <div class="hero-route" aria-label="Cómo funciona"><div><b>01</b><span>Indica tu CP</span></div><div><b>02</b><span>Confirma la provincia</span></div><div><b>03</b><span>Abre el canal oficial</span></div></div>
  </div>
 </section>
+
+<section class="urda-assist container" id="ayuda-urda" aria-labelledby="urdaTitle">
+ <div class="urda-assist-header">
+  <div>
+   <span class="urda-assist-label">Ayuda a familias · Urda, Toledo</span>
+   <h2 id="urdaTitle">Accidente ferroviario del 28 de octubre</h2>
+   <p>Contactos de asistencia comunicados por los organismos responsables. Para información sobre una persona afectada, utiliza los servicios oficiales, no publicaciones en redes sociales.</p>
+  </div>
+  <p class="urda-assist-date">Fuentes consultadas el <time datetime="2026-10-29">29/10/2026</time>.<br>No hay actualización automática ni confirmación de disponibilidad telefónica en directo.</p>
+ </div>
+ <div class="urda-assist-grid">
+  <article class="urda-contact">
+   <small>Información a familias y amistades · 112 Castilla-La Mancha</small>
+   <strong>Atención oficial a posibles afectados</strong>
+   <a class="urda-tel" href="tel:+34900122112" aria-label="Llamar al 900 122 112, atención a familias">900 122 112</a>
+   <a class="urda-source" href="https://112.castillalamancha.es/112/emergencias-e-incidencias/platecam-activado-en-la-provincia-de-toledo" target="_blank" rel="noopener noreferrer">Ver comunicación del 112 ↗</a>
+  </article>
+  <article class="urda-contact">
+   <small>Personas afectadas y familiares · Renfe</small>
+   <strong>Plan de asistencia de Renfe</strong>
+   <a class="urda-tel" href="tel:+34900101020" aria-label="Llamar al 900 10 10 20, asistencia Renfe">900 10 10 20</a>
+   <a class="urda-source" href="https://grupo.renfe.com/es/es/sala-de-prensa/noticias/2026/10/comunicado-renfe-accidente-urda" target="_blank" rel="noopener noreferrer">Ver comunicado Renfe ↗</a>
+  </article>
+  <article class="urda-contact">
+   <small>Personas afectadas y familiares · Iryo</small>
+   <strong>Asistencia de Iryo</strong>
+   <a class="urda-tel" href="tel:+34900001403" aria-label="Llamar al 900 001 403, asistencia Iryo">900 001 403</a>
+   <a class="urda-source" href="https://iryo.eu/en/new/comunicado-de-prensa-accidente-ferroviario-en-urda" target="_blank" rel="noopener noreferrer">Ver comunicado Iryo ↗</a>
+  </article>
+ </div>
+ <div class="urda-assist-foot">
+  <div class="urda-assist-note">
+   <h3>Puntos de asistencia y desplazamientos</h3>
+   <p>Adif comunicó atención a afectados en estaciones de Madrid-Puerta de Atocha, Sevilla-Santa Justa, Córdoba y Málaga. Es información fechada: confirma el dispositivo antes de desplazarte.</p>
+   <a href="https://www.adif.es/viajeros/estado-de-la-red" target="_blank" rel="noopener noreferrer">Consultar Adif y estado ferroviario ↗</a>
+  </div>
+  <div class="urda-assist-note">
+   <h3>Donar sangre y ayudar</h3>
+   <p>No tenemos confirmación de necesidades sanguíneas concretas, saturación hospitalaria ni llamamientos vigentes para este accidente. Consulta primero el organismo sanitario de tu provincia.</p>
+   <a href="#buscar">Encontrar el canal oficial de donación ↗</a>
+  </div>
+ </div>
+ <p class="urda-assist-caution"><strong>Privacidad y seguridad:</strong> DONA no recibe listados de personas, fotografías, vídeos, datos de hospitales ni solicitudes de búsqueda de familiares. No compartas datos privados de afectados. Si existe una emergencia inmediata, llama al 112. Las noticias, los datos provisionales y los puntos de asistencia pueden cambiar: verifica siempre el comunicado original.</p>
+</section>
+
 <section class="notices-section container" id="alertas" aria-labelledby="noticesTitle">
  <div class="section-heading"><div><div class="eyebrow">Información revisada</div><h2 id="noticesTitle">Avisos sanitarios</h2></div><p class="section-intro">Solo destacamos comunicaciones vigentes y contrastadas.</p></div>
  <p class="notice-review small">Última revisión editorial: <time datetime="2026-10-28T22:50:00Z">28/10/2026, 23:50 (Madrid)</time>. Revisión manual, sin catálogo exhaustivo de campañas.</p>
