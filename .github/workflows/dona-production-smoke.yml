@@ -1,0 +1,54 @@
+name: DONA production SHA and HTML smoke (read only)
+
+on:
+  push:
+    branches:
+      - qa/dona-urda-postdeploy
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild validated HTML from exact source
+        run: python3 scripts/build.py
+      - name: Verify public HTML and navigation
+        run: |
+          python3 - <<'PY'
+          from urllib.request import Request, urlopen
+          from hashlib import sha256
+          from pathlib import Path
+
+          expected = Path("dist/index.html").read_bytes()
+          assert expected.startswith(b'<!doctype html>'), "Generated HTML missing"
+          required = [
+              b'id="ayuda-urda"',
+              b'900 122 112',
+              b'900 10 10 20',
+              b'900 001 403',
+              b'puntos-de-donacion-alicante',
+              b'donarsangre.sanidadmadrid.org/moviles.aspx',
+          ]
+          for label in required:
+              assert label in expected, "Missing expected information: " + str(label)
+          for suffix in ('/', '/index.html'):
+              url = 'https://dona-2fp.pages.dev' + suffix
+              request = Request(url, headers={'User-Agent': 'DONA-production-smoke/1.0'})
+              with urlopen(request, timeout=25) as response:
+                  status, actual = response.status, response.read()
+              assert status == 200, f'{url}: HTTP {status}'
+              assert actual == expected, (
+                  f'{url}: public artifact mismatch '
+                  f'actual={sha256(actual).hexdigest()} expected={sha256(expected).hexdigest()}'
+              )
+              print(f'{url}: HTTP 200, byte-identical; {len(actual)} bytes, sha256={sha256(actual).hexdigest()}')
+          PY
+      - name: Report verified source SHA and limit
+        run: |
+          echo "Source_SHA=${GITHUB_SHA}"
+          echo "Checks cover HTTP response and byte equality; browser interactions passed separately on PR #15."
