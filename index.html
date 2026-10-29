@@ -73,6 +73,16 @@
 .notice-review{margin:0 0 14px;color:var(--muted)}
 
 
+/* Mobile font-metric guard: preserve the CP action above the fold in all supported browsers. */
+@media(max-width:600px){
+ .head{min-height:62px;padding-top:6px;padding-bottom:6px}
+ .redesign-hero{padding-top:11px;gap:9px}
+ .hero-copy h1{margin:6px 0 7px}
+ .hero-copy .hero-lead{margin-bottom:8px}
+ .hero-task{padding:11px 13px}
+ .task-kicker{margin-bottom:8px}
+}
+
 /* Independent crisis-help panel: factual, calm, accessible, never a live incident feed. */
 .urda-assist-expander{border:1px solid #dfd1cd;border-radius:16px;background:#fff;overflow:clip}
 .urda-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;list-style:none;padding:18px 21px;cursor:pointer}
