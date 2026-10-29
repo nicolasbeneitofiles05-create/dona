@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "research_only_not_connected_to_production",
+  "description": "Official external navigation only. No claims of future sessions, hours, blood stock, proximity, data reuse rights, or current availability.",
+  "links": [
+    {
+      "province_prefix": "03",
+      "province": "Alicante",
+      "region": "Comunitat Valenciana",
+      "agency": "Centro de Transfusión de la Comunitat Valenciana",
+      "url": "https://centro-transfusion.san.gva.es/es/puntos-de-donacion-alicante",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "12",
+      "province": "Castellón",
+      "region": "Comunitat Valenciana",
+      "agency": "Centro de Transfusión de la Comunitat Valenciana",
+      "url": "https://centro-transfusion.san.gva.es/es/puntos-de-donacion-castellon",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "46",
+      "province": "Valencia",
+      "region": "Comunitat Valenciana",
+      "agency": "Centro de Transfusión de la Comunitat Valenciana",
+      "url": "https://centro-transfusion.san.gva.es/es/puntos-de-donacion-valencia",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "08",
+      "province": "Barcelona",
+      "region": "Cataluña",
+      "agency": "Banc de Sang i Teixits",
+      "url": "https://www.bancsang.net/es/donaciones/sangre/calendario/",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "17",
+      "province": "Girona",
+      "region": "Cataluña",
+      "agency": "Banc de Sang i Teixits",
+      "url": "https://www.bancsang.net/es/donaciones/sangre/calendario/",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "25",
+      "province": "Lleida",
+      "region": "Cataluña",
+      "agency": "Banc de Sang i Teixits",
+      "url": "https://www.bancsang.net/es/donaciones/sangre/calendario/",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "43",
+      "province": "Tarragona",
+      "region": "Cataluña",
+      "agency": "Banc de Sang i Teixits",
+      "url": "https://www.bancsang.net/es/donaciones/sangre/calendario/",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    },
+    {
+      "province_prefix": "28",
+      "province": "Madrid",
+      "region": "Comunidad de Madrid",
+      "agency": "Centro de Transfusión de la Comunidad de Madrid",
+      "url": "https://donarsangre.sanidadmadrid.org/moviles.aspx",
+      "kind": "official_navigation",
+      "reuse_permission": "not_verified",
+      "last_link_reviewed_at": "2026-10-29",
+      "event_data_imported": false
+    }
+  ]
+}
