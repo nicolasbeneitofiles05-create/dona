@@ -68,6 +68,10 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
   assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'ayuda se cierra por teclado');
   await page.goto(url+'/#ayuda-urda');
   assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),'','enlace directo a familias despliega los teléfonos');
+  await page.locator('#ayuda-urda summary').click();
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'ayuda se puede cerrar manualmente');
+  await page.locator('nav[aria-label="Navegación"] a[href="#ayuda-urda"]').click();
+  assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),'','mismo hash vuelve a abrir ayuda');
   await page.goto(url);
   assert.equal(await page.locator('#ayuda-urda .urda-assist-expander').getAttribute('open'),null,'sin hash el panel conserva cierre inicial');
 
