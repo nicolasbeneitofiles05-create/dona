@@ -114,7 +114,7 @@ def validate(data):
                 errors.append(ref + ": expiration must be shortly after check")
         for name in ("region", "title", "claim", "source_org", "review_basis", "scope"):
             val = item.get(name)
-            if not isinstance(val, str) or len(val.strip()) < 8 or len(val) > 500 or "<" in val or ">" in val:
+            if not isinstance(val, str) or len(val.strip()) < (3 if name == "source_org" else 8) or len(val) > 500 or "<" in val or ">" in val:
                 errors.append(ref + ": invalid editorial text " + name)
         forbidden = ("hospital saturado", "sangre cubierta", "necesidad urgente", "tiempo real", "confirmado ahora")
         claim = item.get("claim", "")
