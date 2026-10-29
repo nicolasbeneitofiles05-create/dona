@@ -84,11 +84,11 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
 
   heights['320-initial']=await initialAt(320,568);assert(heights['320-initial'].height<=2600,JSON.stringify(heights['320-initial']));
   assert(await page.locator('#postal').isVisible());assert(await page.locator('.primary').isVisible());
-  const heroBottom320=await page.evaluate(()=>Math.max(document.querySelector('#postal').getBoundingClientRect().bottom,document.querySelector('.primary').getBoundingClientRect().bottom));assert(heroBottom320<=568,'CP y botón visibles en 320x568');
+  const heroBottom320=await page.evaluate(()=>Math.max(document.querySelector('#postal').getBoundingClientRect().bottom,document.querySelector('.primary').getBoundingClientRect().bottom));console.log('Viewport 320x568 · buscador termina en '+heroBottom320+'px');assert(heroBottom320<=568,'CP y botón visibles en 320x568: '+heroBottom320+'px');
   heights['320-28007']=await resultAt('28007');assert(heights['320-28007'].height<=3100,JSON.stringify(heights['320-28007']));
   heights['390-initial']=await initialAt(390,844);assert(heights['390-initial'].height<=2400,JSON.stringify(heights['390-initial']));
   assert(await page.locator('#postal').isVisible());assert(await page.locator('.primary').isVisible());
-  const heroBottom390=await page.evaluate(()=>Math.max(document.querySelector('#postal').getBoundingClientRect().bottom,document.querySelector('.primary').getBoundingClientRect().bottom));assert(heroBottom390<=844,'CP y botón visibles en 390x844');
+  const heroBottom390=await page.evaluate(()=>Math.max(document.querySelector('#postal').getBoundingClientRect().bottom,document.querySelector('.primary').getBoundingClientRect().bottom));console.log('Viewport 390x844 · buscador termina en '+heroBottom390+'px');assert(heroBottom390<=844,'CP y botón visibles en 390x844: '+heroBottom390+'px');
   heights['390-28007']=await resultAt('28007');assert(heights['390-28007'].height<=2900,JSON.stringify(heights['390-28007']));
 
   await page.clock.fastForward(6*60*1000);assert.equal(await page.locator('#eventCards').innerText(),emptyNotice,'vacío no afirma ausencia general de campañas');assert(await page.locator('#alertas time').isVisible());assert.equal(await page.locator('#alertas time').getAttribute('datetime'),'2026-10-28T22:50:00Z');assert.equal(await page.locator('.history-panel').getAttribute('open'),null);await page.locator('.history-panel summary').click();assert((await page.locator('#historyCards .label').innerText()).includes('Caducado'),'caducado queda en historial');
