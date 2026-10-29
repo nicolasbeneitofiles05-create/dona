@@ -1,0 +1,50 @@
+name: DONA RADAR V1 validations (no deploy)
+
+on:
+  push:
+    branches: [feature/dona-radar-editorial-v1]
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'data/incidents.json'
+      - 'scripts/**'
+      - '.github/workflows/radar-safety.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dona-radar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Source contract, clinical safety and browser journeys
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate dated radar sources
+        run: |
+          python3 scripts/validate-radar.py
+          python3 scripts/test-radar.py
+      - name: Build DONA and provincial links
+        run: python3 scripts/build.py
+      - name: Test expiry of sanitary notices
+        run: node scripts/test-notices.cjs
+      - name: Install isolated Playwright
+        run: |
+          npm install --no-save --package-lock=false --prefix .tools playwright@1.56.1
+          .tools/node_modules/.bin/playwright install --with-deps chromium
+      - name: Browser regression with real Chromium
+        run: |
+          export BROWSER_PATH="$(node -p "require('./.tools/node_modules/playwright').chromium.executablePath()")"
+          node scripts/test-browser.cjs
+      - name: Log exact validated SHA
+        run: echo "DONA RADAR validated at ${GITHUB_SHA}; NO Cloudflare deployment"
