@@ -22,7 +22,7 @@ ITEM_FIELDS = {
 }
 
 def as_date(value):
-    if not isinstance(value, str) or not re.fullmatch(r"\\d{4}-\\d{2}-\\d{2}", value):
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
         return None
     try:
         return date.fromisoformat(value)
@@ -30,7 +30,7 @@ def as_date(value):
         return None
 
 def as_instant(value):
-    if not isinstance(value, str) or not re.fullmatch(r"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}[+-]\\d{2}:\\d{2}", value):
+    if not isinstance(value, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}", value):
         return None
     try:
         dt = datetime.fromisoformat(value)
@@ -106,7 +106,7 @@ def validate(data):
         if not published or not checked or not expires:
             errors.append(ref + ": invalid date/time")
         else:
-            if published < as_date(incident.get("date")) or published > checked:
+            if not as_date(incident.get("date")) or published < as_date(incident.get("date")) or published > checked:
                 errors.append(ref + ": publication/verification order invalid")
             if review and checked > review:
                 errors.append(ref + ": item checked after editorial review")
