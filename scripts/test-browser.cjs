@@ -3,6 +3,7 @@ const {chromium}=require('../.tools/node_modules/playwright');
 const {readFileSync,writeFileSync}=require('node:fs');
 const http=require('node:http');
 const assert=require('node:assert/strict');
+const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede haber campañas en los canales oficiales: consúltalos antes de desplazarte.';
 (async()=>{
  const worker=(await import('data:text/javascript;base64,'+readFileSync('dist/_worker.js').toString('base64'))).default;
  const server=http.createServer(async(req,res)=>{const r=await worker.fetch(new Request('http://localhost'+req.url));res.writeHead(r.status,Object.fromEntries(r.headers));res.end(Buffer.from(await r.arrayBuffer()));});
@@ -20,8 +21,11 @@ const assert=require('node:assert/strict');
   await page.goto(url);
   assert.equal(await (await page.request.get(url)).text(),readFileSync('index.html','utf8'),'worker conserva el HTML completo');
   assert.equal(await page.locator('.directory-disclosure').getAttribute('open'),null,'directorio cerrado inicialmente');
-  assert(await page.getByText('Ver las 17 comunidades autónomas',{exact:true}).isVisible());
+  assert(await page.getByText('Ver el directorio regional',{exact:true}).isVisible());
   assert.equal(await page.evaluate(()=>noticeState({...reviewedNotices[0],expires_at:'2026-10-29T01:00:00+01:00'},Date.parse('2026-10-28T23:00:00Z'))),'active','fixture activo visible');
+  assert.equal(await page.locator('#eventCards .label').innerText(),'Campaña contrastada','aviso vigente visible');
+  assert.equal(await page.locator('.history-panel').getAttribute('open'),null,'historial cerrado inicialmente');
+  assert.equal(await page.locator('#postal').getAttribute('aria-describedby'),'inputHelp');
 
   for(const [cp,province] of [['03801','Alicante'],['28007','Madrid'],['13001','Ciudad Real'],['45001','Toledo'],['51001','Ceuta'],['52001','Melilla']]){
    await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');
@@ -40,8 +44,9 @@ const assert=require('node:assert/strict');
    await page.locator('#postal').fill(cp);await page.locator('#postal').press('Enter');
    assert.equal(await page.locator('#postal').getAttribute('aria-invalid'),'true',cp);
    assert(await page.locator('#searchResult .error-title').isVisible(),cp);
+   assert.equal(await page.locator('#searchResult').getAttribute('role'),'alert',cp+' role alert');
   }
-  await page.locator('#postal').fill('28007');await page.locator('#postal').press('Enter');assert.equal(await page.locator('#postal').getAttribute('aria-invalid'),'false');
+  await page.locator('#postal').fill('28007');await page.locator('#postal').press('Enter');assert.equal(await page.locator('#postal').getAttribute('aria-invalid'),'false');assert.equal(await page.locator('#searchResult').getAttribute('role'),'status','éxito role status');
   const links=await page.locator('a').evaluateAll(nodes=>nodes.map(n=>({href:n.getAttribute('href'),target:n.target,rel:n.rel})));
   for(const link of links){if(link.href.startsWith('#'))assert.equal(await page.locator(link.href).count(),1,link.href);else{assert(link.href.startsWith('https://'));assert(link.rel.includes('noopener'));}}
   assert.equal(await page.locator('#eventCards .label').innerText(),'Campaña contrastada');
@@ -60,10 +65,28 @@ const assert=require('node:assert/strict');
   const heroBottom390=await page.evaluate(()=>Math.max(document.querySelector('#postal').getBoundingClientRect().bottom,document.querySelector('.primary').getBoundingClientRect().bottom));assert(heroBottom390<=844,'CP y botón visibles en 390x844');
   heights['390-28007']=await resultAt('28007');assert(heights['390-28007'].height<=2900,JSON.stringify(heights['390-28007']));
 
-  await page.clock.fastForward(6*60*1000);assert((await page.locator('#eventCards .label').innerText()).includes('Caducado'));
-  await page.reload();assert((await page.locator('#eventCards .label').innerText()).includes('Caducado'),'recargar no renueva');
+  await page.clock.fastForward(6*60*1000);assert.equal(await page.locator('#eventCards').innerText(),emptyNotice,'vacío no afirma ausencia general de campañas');assert(await page.locator('#alertas time').isVisible());assert.equal(await page.locator('#alertas time').getAttribute('datetime'),'2026-10-28T22:50:00Z');assert.equal(await page.locator('.history-panel').getAttribute('open'),null);await page.locator('.history-panel summary').click();assert((await page.locator('#historyCards .label').innerText()).includes('Caducado'),'caducado queda en historial');
+  await page.reload();assert.equal(await page.locator('#eventCards').innerText(),emptyNotice,'recargar no renueva');await page.locator('.history-panel summary').click();assert((await page.locator('#historyCards .label').innerText()).includes('Caducado'),'historial persiste tras recarga');
   await page.evaluate(()=>{reviewedNotices.push({...reviewedNotices[0],title:'AVISO FALSO',review_status:'pending',verified:true});renderNotices();});
-  assert(!(await page.locator('#eventCards').innerText()).includes('AVISO FALSO'));
+  assert(!(await page.locator('#eventCards').innerText()).includes('AVISO FALSO'));assert(!(await page.locator('#historyCards').innerText()).includes('AVISO FALSO'));
+  await page.setViewportSize({width:1440,height:900});
+  await page.evaluate(()=>document.querySelector('.history-panel').open=false);
+  const emptyClosed=await page.locator('.active-notice').boundingBox();
+  assert(emptyClosed.height<=180,'vacío compacto en escritorio: '+emptyClosed.height);
+  await page.locator('.history-panel summary').click();
+  const emptyOpen=await page.locator('.active-notice').boundingBox();
+  assert(Math.abs(emptyOpen.height-emptyClosed.height)<=1,'abrir historial no estira el vacío');
+  await page.evaluate(()=>renderNotices());
+  assert(Math.abs((await page.locator('.active-notice').boundingBox()).height-emptyOpen.height)<=1,'revisión estable sin salto de altura');
+  // Fixture solo en memoria del navegador de prueba; nunca se escribe en los datos publicados.
+  await page.evaluate(()=>{reviewedNotices.push({...reviewedNotices[0],id:'test-only-active',title:'SOLO FIXTURE ACTIVO',message:'Texto largo para comprobar que un aviso activo no se recorta. '.repeat(40),expires_at:'2026-10-30T00:00:00+01:00'});renderNotices();});
+  assert(await page.getByText('SOLO FIXTURE ACTIVO',{exact:true}).isVisible());
+  assert.equal(await page.locator('.active-notice.is-empty').count(),0);
+  assert(!(await page.locator('#eventCards').innerText()).includes(emptyNotice));
+  assert((await page.locator('.active-notice').boundingBox()).height>180,'activo largo puede crecer');
+  assert(await page.locator('.active-notice').evaluate(el=>el.scrollHeight<=el.clientHeight+1),'activo no recortado');
+  await page.evaluate(()=>{reviewedNotices.splice(reviewedNotices.findIndex(x=>x.id==='test-only-active'),1);renderNotices();document.querySelector('.history-panel').open=false;});
+  assert.equal(await page.locator('#eventCards').innerText(),emptyNotice);
   for(const width of [320,375,390,768,1440]){
    await page.setViewportSize({width,height:900});
    await page.locator('#postal').fill('03801');await page.locator('#postal').press('Enter');
