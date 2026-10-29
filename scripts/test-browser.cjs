@@ -156,7 +156,7 @@ const emptyNotice='DONA no tiene avisos activos verificados para mostrar. Puede 
   assert(safeRadarLinks.every(link=>link.url.startsWith('https://')&&link.rel.includes('noopener')),'fuentes seguras');
   await page.clock.setFixedTime(new Date('2026-11-01T14:00:00+01:00'));
   await page.evaluate(()=>renderRadar());
-  assert.equal(await page.locator('#radarLatest .radar-item-status').first().innerText(),'Histórico · verificar vigencia','fuentes se vuelven históricas automáticamente');
+  assert.equal((await page.locator('#radarLatest .radar-item-status').first().innerText()).toLocaleLowerCase('es-ES'),'histórico · verificar vigencia','fuentes se vuelven históricas automáticamente');
   assert.equal(await page.locator('#radarLatest .radar-item-status.is-confirmed').count(),0,'sin falsas fuentes vigentes tras caducidad');
   assert.deepEqual(errors,[]);
 
