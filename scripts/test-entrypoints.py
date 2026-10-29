@@ -58,5 +58,16 @@ class EntryPointsTest(unittest.TestCase):
     def test_non_ascii_digits_rejected(self):
         self.assertIsNone(checker.resolve("٠٣٤٤٠", DATA))
 
+    def test_impossible_or_future_review_rejected(self):
+        for stamp in ('2026-02-30', '2099-01-01', None):
+            bad = deepcopy(DATA)
+            bad['links'][0]['last_link_reviewed_at'] = stamp
+            self.assertTrue(checker.validate(bad))
+
+    def test_research_catalogue_not_published_accidentally(self):
+        bad = deepcopy(DATA)
+        bad['status'] = 'research_only_not_connected_to_production'
+        self.assertTrue(checker.validate(bad))
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "research_only_not_connected_to_production",
+  "status": "approved_navigation_only",
   "description": "Official external navigation only. No claims of future sessions, hours, blood stock, proximity, data reuse rights, or current availability.",
   "links": [
     {
