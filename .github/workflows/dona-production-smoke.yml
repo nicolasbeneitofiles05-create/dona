@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - qa/dona-urda-postdeploy
+  pull_request:
+    paths:
+      - '.github/workflows/dona-production-smoke.yml'
   workflow_dispatch:
 
 permissions:
