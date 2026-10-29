@@ -1,0 +1,50 @@
+name: DONA Ayuda CI (no deploy)
+
+on:
+  push:
+    branches:
+      - feature/urda-family-support
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'scripts/**'
+      - '.github/workflows/urda-safety.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dona-urda-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Sanitary and browser regressions
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact SHA
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build static worker
+        run: python3 scripts/build.py
+      - name: Verify notices and expiry
+        run: node scripts/test-notices.cjs
+      - name: Install browser test dependency (CI only)
+        run: npm install --no-save --package-lock=false --prefix .tools playwright@1.56.1
+      - name: Install Chromium headless (CI only)
+        run: .tools/node_modules/.bin/playwright install --with-deps chromium
+      - name: Test full browser journeys and family contacts
+        env:
+          CI: 'true'
+        run: |
+          export BROWSER_PATH="$(node -p "require('./.tools/node_modules/playwright').chromium.executablePath()")"
+          node scripts/test-browser.cjs
+      - name: Check patch whitespace
+        run: git diff --check
+      - name: Report delivered SHA
+        run: echo "Validated ${GITHUB_SHA}; NO deployment was attempted."
