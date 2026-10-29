@@ -1,0 +1,44 @@
+name: DONA RADAR production byte match (read only)
+on:
+  pull_request:
+    paths: ['.github/workflows/radar-production-smoke.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build versioned production artifact
+        run: python3 scripts/build.py
+      - name: Revalidate incident records
+        run: python3 scripts/validate-radar.py
+      - name: Fetch production and compare bytes and required claims
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from hashlib import sha256
+          from urllib.request import Request, urlopen
+          source=Path('dist/index.html').read_bytes()
+          expected=[
+             b'id="radar"',
+             b'id="ayuda-urda"',
+             b'id="radar-editorial"',
+             b'urda-112-familias',
+             b'puntos-de-donacion-alicante',
+             b'tel:+34900122112',
+          ]
+          for marker in expected:
+              assert marker in source, 'missing marker '+repr(marker)
+          for path in ('/', '/index.html'):
+              url='https://dona-2fp.pages.dev'+path
+              with urlopen(Request(url,headers={'User-Agent':'DONA-Radar-ReadOnly-QA/1.0'}),timeout=25) as response:
+                  assert response.status==200
+                  public=response.read()
+              assert public==source, f'Public mismatch {url} expected={sha256(source).hexdigest()} actual={sha256(public).hexdigest()}'
+              print(f'{url} HTTP 200, byte-identical, {len(source)} bytes, SHA256={sha256(source).hexdigest()}')
+          PY
+      - name: Release reference
+        run: echo "Verified source SHA ${GITHUB_SHA}; no deployment or mutation by this job."
