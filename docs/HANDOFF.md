@@ -2,6 +2,8 @@
 
 ## Fuente de verdad
 
+Actualización: #9 y #13 fusionados y DONA 2.0 publicada en `243d030129526b19252afb622e6f687e8515f0c5`. Ver `DONA2-RELEASE.md` y `PR12-INTEGRATION-REVIEW.md`. #12 sigue sin consumir sus enlaces en UI y #8 continúa aislado. Los párrafos siguientes conservan antecedentes de la publicación inicial.
+
 `index.html` conserva la aplicación importada con las correcciones y la mejora técnica de Manus #5, revisada independientemente. PR #1, #2, #3 y #5 fusionados; SHA `aba4b83f254d001e890b2c3b6bad175a2cf32c90` publicado y comprobado. Ver `PRODUCTION.md`. La versión sanitaria anterior y la importación original se conservan en Git y Cloudflare. El repositorio no conecta por sí solo Venice, Manus y Cloudflare. Consultar `SOURCE-AUDIT.md`, `VALIDATION.md`, `GEOGRAPHY.md` y el encargo `MANUS-HANDOFF.md`.
 
 ## Prioridades
